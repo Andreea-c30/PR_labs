@@ -1,0 +1,6 @@
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 130
+
+<p><a href ="http://127.0.0.1:8080/products/0">Product_0</a></p>
+<p><a href ="http://127.0.0.1:8080/products/1">Product_1</a></p>
