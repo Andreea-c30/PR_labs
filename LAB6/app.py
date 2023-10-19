@@ -1,0 +1,24 @@
+from flask import Flask, jsonify
+from flasgger import Swagger
+from models.database import db
+from models.electro_scooter import ElectroScooter
+def create_app():
+    app = Flask(__name__)
+
+    # Configure Swagger
+    app.config['SWAGGER'] = {
+        'title': 'Your API Title',
+        'description': 'Your API Description',
+    }
+
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:12345@localhost/db_scooters'
+
+    db.init_app(app)
+    Swagger(app, template_file='swagger.yml')
+    return app
+
+if __name__ == '__main__':
+    app = create_app()
+    import routes
+    app.run(debug=True)
