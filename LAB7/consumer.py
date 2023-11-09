@@ -77,18 +77,20 @@ def consumer(nr):
                 pass
         else:
             print("Error retrieving data")
+        ch.basic_ack(delivery_tag=method.delivery_tag)
 
-    #eet up the consumer with the callback()
+    channel.basic_qos(prefetch_count=1)
+    # eet up the consumer with the callback()
     channel.basic_consume(queue=queue_name, on_message_callback=callback)
 
-    #start consuming messages
+    # start consuming messages
     channel.start_consuming()
 
 
 if __name__ == "__main__":
-    thread_nr= 2
+    thread_nr  = 4
     threads = []
-    for i in range(thread_nr):
+    for i in range(thread_nr ):
             thread = threading.Thread(target=consumer, args=(i,))
             threads.append(thread)
             thread.start()
