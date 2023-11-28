@@ -1,0 +1,146 @@
+swagger: '2.0'
+info:
+  title: Electro Scooters API
+  description: API for electroscooters
+paths:
+  /api/electro-scooters/{scooter_id}:
+    get:
+      summary: Get Electro Scooter by ID
+      parameters:
+        - name: scooter_id
+          in: path
+          type: integer
+          required: true
+          description: ID of the Electro Scooter to retrieve.
+      responses:
+        200:
+          description: Electro Scooter details.
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: ID of the Electro Scooter.
+              name:
+                type: string
+                description: Name of the Electro Scooter.
+              battery_level:
+                type: number
+                format: float
+                description: Battery level of the Electro Scooter.
+        404:
+          description: Electro Scooter not found.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: Error message indicating that the Electro Scooter was not found.
+    put:
+      summary: Update Electro Scooter
+      parameters:
+        - name: scooter_id
+          in: path
+          type: integer
+          required: true
+          description: ID of the Electro Scooter to update.
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: New name for the Electro Scooter.
+              battery_level:
+                type: number
+                format: float
+                description: New battery level for the Electro Scooter.
+      responses:
+        200:
+          description: Electro Scooter updated successfully.
+        404:
+          description: Electro Scooter not found.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: Error message indicating that the Electro Scooter was not found.
+        500:
+          description: Internal Server Error.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: Error message indicating an internal server error.
+    delete:
+      summary: Delete Electro Scooter
+      parameters:
+        - name: scooter_id
+          in: path
+          type: integer
+          required: true
+          description: ID of the Electro Scooter to delete.
+        - name: X-Delete-Password
+          in: header
+          type: string
+          required: true
+          description: Password for the delete operation.
+      responses:
+        200:
+          description: Electro Scooter deleted successfully.
+        401:
+          description: Unauthorized. Incorrect password.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: Error message indicating an incorrect password.
+        404:
+          description: Electro Scooter not found.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: Error message indicating that the Electro Scooter was not found.
+        500:
+          description: Internal Server Error.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: Error message indicating an internal server error.
+  /api/electro-scooters:
+    post:
+      summary: Create Electro Scooter
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the Electro Scooter.
+              battery_level:
+                type: number
+                format: float
+                description: Battery level of the Electro Scooter.
+      responses:
+        201:
+          description: Electro Scooter created successfully.
+        400:
+          description: Invalid request data.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: Error message indicating that the request data is invalid.
